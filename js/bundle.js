@@ -1,14 +1,73 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 var Radium = require('radium');
 
+var MainContainer = React.createClass({
+	render: function() {
+		var style = {
+			backgroundColor: 'black'
+		};
+		return React.createElement(
+			'div',
+			{},
+			React.createElement(Sidebar, null),
+			React.createElement(VideoFrame, null)
+			);
+	}
+});
+
+var VideoFrame = React.createClass({
+	render: function() {
+	  	var style = {
+	  		display: "inline-block",
+	  		leftPadding: "20%",
+	  		width: "80%",
+	  		backgroundColor: 'black'
+	  	};
+	  	return (
+	  		React.createElement(
+	  			'div',
+	  			{style: style},
+	  			React.createElement(SidebarLink, {text: "Browse"}),
+	  			React.createElement(SidebarLink, {text: "Guide"}),
+	  			React.createElement(SidebarLink, {text: "Activity"})
+	  			)
+	    	);
+		}
+});
+
+var UsersSharedVideo = React.createClass({
+	render: function() {
+	  	var style = {
+	  		display: "inline-block",
+	  		leftPadding: "20%",
+	  		width: "80%",
+	  		backgroundColor: 'black'
+	  	};
+	  	return (
+	  		React.createElement(
+	  			'div',
+	  			{style: style},
+	  			React.createElement(SidebarLink, {text: "Browse"}),
+	  			React.createElement(SidebarLink, {text: "Guide"}),
+	  			React.createElement(SidebarLink, {text: "Activity"})
+	  			)
+	    	);
+		}
+});
+
 var Sidebar = React.createClass({
 
   // using javascript
   render: function() {
+  	var style = {
+  		display: "inline-block",
+  		width: "20%",
+  		backgroundColor: 'black'
+  	};
   	return (
   		React.createElement(
   			'div',
-  			{},
+  			{style: style},
   			React.createElement(SidebarLink, {text: "Browse"}),
   			React.createElement(SidebarLink, {text: "Guide"}),
   			React.createElement(SidebarLink, {text: "Activity"})
@@ -26,67 +85,12 @@ var Sidebar = React.createClass({
 	// }
 });
 
-var SidebarLink1 = React.createClass({
-	getInitialState: function () {
-        return {hover: false};
-    },
-
-    mouseOver: function () {
-        this.setState({hover: true});
-    },
-
-    mouseOut: function () {
-        this.setState({hover: false});
-    },
-	render: function() {
-		var style = {
-			display: "block",
-    		color: "#FFFF",
-		    width: 250,
-			textIndent: 20,
-    		lineHeight: "40px",
-    		background: "#0000"
-		};
-		if (this.state.hover) {
-            style.background = "#801818";
-        } else {
-        	style.background = "#0000";
-        }
-  		return React.createElement(
-  			'div', 
-  			{style: style, onMouseOver: this.mouseOver, onMouseOut: this.mouseOut}, 
-  			this.props.text
-  		);	
-  	}
-});
-
 class SidebarLink extends React.Component {
-	// render() {
-	// 	var style = {
-	// 		display: "block",
- //    		color: "#FFFF",
-	// 	    width: 250,
-	// 		textIndent: 20,
- //    		lineHeight: "40px",
- //    		background: "#0000"
-	// 	};
-	// 	if (this.state.hover) {
- //            style.background = "#801818";
- //        } else {
- //        	style.background = "#0000";
- //        }
- //  		return React.createElement(
- //  			'div', 
- //  			{style: style, onMouseOver: this.mouseOver, onMouseOut: this.mouseOut}, 
- //  			this.props.text
- //  		);	
- //  	}
 	render() {
 		var style = {
 			display: "block",
     		color: 'white',
-		    width: 250,
-			textIndent: 20,
+    		textIndent: 20,
     		lineHeight: "40px",
     		backgroundColor: 'black',
     		':hover': {
@@ -103,7 +107,7 @@ class SidebarLink extends React.Component {
 SidebarLink = Radium(SidebarLink);
 
 ReactDOM.render(
-  React.createElement(Sidebar, null),
+  React.createElement(MainContainer, null),
   document.getElementById('content')
 );
 },{"radium":13}],2:[function(require,module,exports){
