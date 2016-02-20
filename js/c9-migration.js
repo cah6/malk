@@ -1,4 +1,4 @@
-var Radium = require('radium');
+//var Radium = require('radium');
 
 var MainContainer = React.createClass({
 	render: function() {
@@ -24,12 +24,12 @@ var ContentFrame = React.createClass({
 	  	};
 	  	var users = ["Devin", "Jeremy", "Danny", "Christian"]
 	  	var userObjectList = users.map(function(userName) {
-		  	return React.createElement(UsersSharedVideo, {user: userName});
+		  	return React.createElement(UsersSharedVideo, {key: Math.random(), user: userName});
 		});
 	  	return (
 	  		React.createElement(
 	  			'div',
-	  			{style: style},
+	  			{className: "ContentFrame", style: style},
 	  			userObjectList
 	  			)
 	    	);
@@ -95,6 +95,7 @@ var UserRecentlySharedVideoList = React.createClass({
 			}
 		];
 		var titlesAndUrlObjectList = titlesAndUrl.map(function(titleAndUrlMap) {
+			titleAndUrlMap["key"] = Math.random();
 		  	return React.createElement(VideoWithTitle, titleAndUrlMap);
 		});
 	  	return (
@@ -130,7 +131,7 @@ var EmbeddedVideo = React.createClass({
 	  	return (
 	  		React.createElement(
 	  			'iframe',
-	  			{src: this.props.url}
+	  			{src: "https://www.youtube.com/embed/oYiT-vLjhC4"}
 	  			)
 	    	);
 		}
@@ -186,7 +187,7 @@ class SidebarLink extends React.Component {
     	);
   	}
 }
-SidebarLink = Radium(SidebarLink);
+//SidebarLink = Radium(SidebarLink);
 
 ReactDOM.render(
   React.createElement(MainContainer, null),
