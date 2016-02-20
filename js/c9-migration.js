@@ -110,12 +110,14 @@ var UserRecentlySharedVideoList = React.createClass({
 var VideoWithTitle = React.createClass({
 	render: function() {
 		var style = {
+			display: "inline-block",
+			width: 300,
 			color: 'white'
 		}
 	  	return (
 	  		React.createElement(
 	  			'div',
-	  			{style: style},
+	  			{className: "VideoWithTitle", style: style},
 	  			this.props.title,
 	  			React.createElement(EmbeddedVideo, {url: this.props.url})
 	  			)
