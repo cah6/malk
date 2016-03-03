@@ -1,0 +1,51 @@
+{
+  "groups" : {
+    "alpha" : {
+      "members" : {
+        "brinchen" : true,
+        "mchen" : true
+      },
+      "name" : "Alpha Tango"
+    },
+    "bravo" : {
+      "members" : {
+        "brinchen" : true
+      },
+      "name" : "Bravo Romeo"
+    },
+    "charlie" : {
+      "members" : {
+        "hmadi" : true,
+        "mchen" : true
+      },
+      "name" : "Charlie Whiskey"
+    },
+    "delta" : {
+      "name" : "Delta Kilo"
+    },
+    "echo" : {
+      "name" : "Echo Lima"
+    },
+    "foxtrot" : {
+      "name" : "Foxtrot November"
+    }
+  },
+  "users" : {
+    "e0702436-0495-4294-909e-0a14df421c87" : {
+      "provider" : "email",
+      "name" : "Danny Volz"
+    },
+    "da7889ca-6f7e-41f2-b38f-c91cbde7e6ea" : {
+      "provider" : "email",
+      "name" : "Jeremy Kaye"
+    },
+    "c44dea1b-5c35-478e-9ace-ef79437b4ca4" : {
+      "provider" : "email",
+      "name" : "Devin McNulty"
+    },
+    "b45dbe73-d9d8-4eae-9c35-83e08f516d97" : {
+      "provider" : "email",
+      "name" : "Christian Henry"
+    },
+  }
+}
