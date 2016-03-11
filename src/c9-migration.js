@@ -2,6 +2,10 @@
 import React, { Component } from 'react';
 import Radium from 'radium';
 import { div, h, h1, h2, nav, ul, a, iframe, img} from 'react-hyperscript-helpers';
+//import ReactFireMixin from 'reactfire';
+//import Firebase from 'firebase';
+
+const firebaseServerRoot = "https://incandescent-heat-7098.firebaseio.com/"
 
 export default class App extends Component {
     render() {
@@ -14,10 +18,14 @@ export default class App extends Component {
 }
 
 var ContentFrame = React.createClass({
+    mixins: [ReactFireMixin],
+    componentWillMount: function () {
+        var ref = new Firebase('https://incandescent-heat-7098.firebaseio.com/videos/');
+        this.bindAsArray(ref, 'videos');
+    },
     render: function () {
-        var users = ["Devin-2", "Jeremy", "Danny", "Christian"]
-        var userObjectList = users.map(function (userName) {
-            return React.createElement(UsersSharedVideo, {key: Math.random(), user: userName});
+        var userObjectList = this.state.videos.map(function (videos) {
+            return React.createElement(UsersSharedVideo, {videos: videos, userId: videos['.key']});
         });
         return (
             div('.test', {}, [
@@ -26,7 +34,7 @@ var ContentFrame = React.createClass({
                         width: '100%',
                         height: '400px',
                         allowFullScreen: true,
-                        src: 'https://www.youtube.com/embed/a2Qnh2OlND8'
+                        src: 'https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/242635562&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true'
                     }),
                     div('.pure-u-1-3', 'Area for information'),
                     div('#the-view', userObjectList)
@@ -37,79 +45,36 @@ var ContentFrame = React.createClass({
 });
 
 var UsersSharedVideo = React.createClass({
+    mixins: [ReactFireMixin],
+    componentWillMount: function () {
+        var ref = new Firebase('https://incandescent-heat-7098.firebaseio.com/users/' + this.props.userId);
+        this.bindAsArray(ref, 'userInfo');
+    },
     render: function () {
-        var style = {
-            paddingLeft: 20,
-            paddingTop: 20,
-            paddingBottom: 5,
-            borderStyle: "solid",
-            borderTopWidth: 1,
-            borderBottomWidth: 1,
-            borderLeftWidth: 0,
-            borderRightWidth: 0,
-            borderColor: "#d0d0d0"
-        };
-        //return (
-        //    React.createElement(
-        //        'div',
-        //        {style: style},
-        //        React.createElement(UserRecentlySharedLabel, {user: this.props.user}),
-        //        React.createElement(UserRecentlySharedVideoList, null)
-        //    )
+        var userName = this.state.userInfo.map(function (info) {
+                console.dir(info['.value']);
+                return info['.key']
+            }
+        )
         return div('.friend-feed', [
-                h1('.content-subhead', [this.props.user + ' recently shared:']),
-                img('.pure-u-7-24', {src: 'http://img.youtube.com/vi/a2Qnh2OlND8/0.jpg', style: {height: '230px'}}),
-                img('.pure-u-7-24', {src: 'http://img.youtube.com/vi/a2Qnh2OlND8/0.jpg', style: {height: '230px'}}),
-                img('.pure-u-7-24', {src: 'http://img.youtube.com/vi/a2Qnh2OlND8/0.jpg', style: {height: '230px'}}),
-                a('.pure-button .pure-u-3-24', {}, 'N')
+                h1('.content-subhead', [userName + ' recently shared:']),
+                h(UserRecentlySharedVideoList, {videos: this.props.videos}),
             ]
-        );
-    }
-});
-
-var UserRecentlySharedLabel = React.createClass({
-    render: function () {
-        var style = {
-            color: 'white'
-        }
-        return (
-            React.createElement(
-                'div',
-                {style: style},
-                this.props.user + " recently shared:"
-            )
         );
     }
 });
 
 var UserRecentlySharedVideoList = React.createClass({
     render: function () {
-        var style = {
-            color: 'white'
-        };
-        var titlesAndUrl = [
-            {
-                title: "video1",
-                url: "https://www.youtube.com/embed/oYiT-vLjhC4"
-            },
-            {
-                title: "video2",
-                url: "https://www.youtube.com/embed/oYiT-vLjhC4"
-            },
-            {
-                title: "video3",
-                url: "https://www.youtube.com/embed/oYiT-vLjhC4"
-            }
-        ];
-        var titlesAndUrlObjectList = titlesAndUrl.map(function (titleAndUrlMap) {
-            titleAndUrlMap["key"] = Math.random();
-            return React.createElement(VideoWithTitle, titleAndUrlMap);
+        var titlesAndUrlObjectList = this.props.videos.map(function (video) {
+            return h(VideoWithTitle, video);
         });
         return (
-            React.createElement(
-                'ul',
-                {style: style},
-                titlesAndUrlObjectList
+            div(
+                [
+                    titlesAndUrlObjectList,
+                    a('.pure-button .pure-u-3-24', {}, ['N'])
+                ]
             )
         );
     }
@@ -117,17 +82,12 @@ var UserRecentlySharedVideoList = React.createClass({
 
 var VideoWithTitle = React.createClass({
     render: function () {
-        var style = {
-            display: "inline-block",
-            width: 300,
-            color: 'white'
-        }
         return (
-            React.createElement(
-                'div',
-                {className: "VideoWithTitle", style: style},
-                this.props.title,
-                React.createElement(EmbeddedVideo, {url: this.props.url})
+            div('.pure-u-7-24 videoWithTitle',
+                [
+                    this.props.title,
+                    h(EmbeddedVideo, {url: "http://img.youtube.com/vi/" + this.props.id + "/0.jpg"})
+                ]
             )
         );
     }
@@ -136,9 +96,8 @@ var VideoWithTitle = React.createClass({
 var EmbeddedVideo = React.createClass({
     render: function () {
         return (
-            React.createElement(
-                'iframe',
-                {src: "https://www.youtube.com/embed/oYiT-vLjhC4"}
+            img(
+                {src: this.props.url, height: '200px'}
             )
         );
     }
@@ -148,8 +107,6 @@ var Sidebar = React.createClass({
     render: function () {
         return (
             div('.header',
-                {},
-                //{className: '#layout .header'}
                 [
                     h1('.brand-title', ['Malk']),
                     h2('.brand-tagline', ['Subtext']),

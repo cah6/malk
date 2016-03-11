@@ -1,51 +1,56 @@
 {
-  "groups" : {
-    "alpha" : {
-      "members" : {
-        "brinchen" : true,
-        "mchen" : true
+  "videos": {
+    "b45dbe73-d9d8-4eae-9c35-83e08f516d97": [
+      {
+        "title": "Sometimes",
+        "source": "youtube",
+        "id": "a2Qnh2OlND8"
       },
-      "name" : "Alpha Tango"
-    },
-    "bravo" : {
-      "members" : {
-        "brinchen" : true
+      {
+        "title": "About You",
+        "source": "youtube",
+        "id": "lG5aSZBAuPs"
       },
-      "name" : "Bravo Romeo"
-    },
-    "charlie" : {
-      "members" : {
-        "hmadi" : true,
-        "mchen" : true
+      {
+        "title": "God is Gangsta",
+        "source": "youtube",
+        "id": "4wZytWFm7x0"
+      }
+    ],
+    "e0702436-0495-4294-909e-0a14df421c87": [
+      {
+        "title": "Wide Open",
+        "source": "youtube",
+        "id": "BC2dRkm8ATU"
       },
-      "name" : "Charlie Whiskey"
-    },
-    "delta" : {
-      "name" : "Delta Kilo"
-    },
-    "echo" : {
-      "name" : "Echo Lima"
-    },
-    "foxtrot" : {
-      "name" : "Foxtrot November"
-    }
+      {
+        "title": "Cream on Chrome",
+        "source": "youtube",
+        "id": "xlcywgEMuGI"
+      },
+      {
+        "title": "3,000 miles away",
+        "source": "youtube",
+        "id": "wo8waGM0OMQ"
+      }
+    ]
   },
-  "users" : {
-    "e0702436-0495-4294-909e-0a14df421c87" : {
-      "provider" : "email",
-      "name" : "Danny Volz"
+  "users": {
+    "e0702436-0495-4294-909e-0a14df421c87": {
+      "provider": "email",
+      "name": "Danny Volz"
     },
-    "da7889ca-6f7e-41f2-b38f-c91cbde7e6ea" : {
-      "provider" : "email",
-      "name" : "Jeremy Kaye"
+    "da7889ca-6f7e-41f2-b38f-c91cbde7e6ea": {
+      "provider": "email",
+      "name": "Jeremy Kaye"
     },
-    "c44dea1b-5c35-478e-9ace-ef79437b4ca4" : {
-      "provider" : "email",
-      "name" : "Devin McNulty"
+    "c44dea1b-5c35-478e-9ace-ef79437b4ca4": {
+      "provider": "email",
+      "name": "Devin McNulty"
     },
-    "b45dbe73-d9d8-4eae-9c35-83e08f516d97" : {
-      "provider" : "email",
-      "name" : "Christian Henry"
-    },
+    "b45dbe73-d9d8-4eae-9c35-83e08f516d97": {
+      "provider": "email",
+      "name": "Christian Henry"
+    }
   }
 }
