@@ -44,6 +44,7 @@
     "firebase": "^2.4.1",
     "radium": "^0.16.6",
     "react": "^0.14.0",
-    "react-dom": "^0.14.0"
+    "react-dom": "^0.14.0",
+    "react-hyperscript-helpers": "^1.0.1"
   }
 }
