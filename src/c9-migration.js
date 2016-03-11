@@ -2,8 +2,9 @@
 import React, { Component } from 'react';
 import Radium from 'radium';
 import { div, h, h1, h2, nav, ul, a, iframe, img} from 'react-hyperscript-helpers';
-//import ReactFireMixin from 'reactfire';
-//import Firebase from 'firebase';
+// import ReactFireMixin from 'reactfire';
+// import Firebase from 'firebase';
+import Sidebar from './sidebar.js'
 
 const firebaseServerRoot = "https://incandescent-heat-7098.firebaseio.com/"
 
@@ -23,18 +24,27 @@ var ContentFrame = React.createClass({
         var ref = new Firebase('https://incandescent-heat-7098.firebaseio.com/videos/');
         this.bindAsArray(ref, 'videos');
     },
+    getInitialState: function() {
+        return {
+            src: "http://www.youtube.com/embed/1RZkIPlUosE"
+        }
+    },
     render: function () {
         var userObjectList = this.state.videos.map(function (videos) {
-            return React.createElement(UsersSharedVideo, {videos: videos, userId: videos['.key']});
+            return React.createElement(UsersSharedVideo, {
+                videos: videos,
+                userId: videos['.key'],
+            });
         });
         return (
             div('.test', {}, [
                     h1('.content-subhead', ['Now Playing']),
                     iframe('.pure-u-2-3', {
+                        id: 'main-video',
                         width: '100%',
                         height: '400px',
                         allowFullScreen: true,
-                        src: 'https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/242635562&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true'
+                        src: this.state.src
                     }),
                     div('.pure-u-1-3', 'Area for information'),
                     div('#the-view', userObjectList)
@@ -46,19 +56,25 @@ var ContentFrame = React.createClass({
 
 var UsersSharedVideo = React.createClass({
     mixins: [ReactFireMixin],
+    //getInitialState: function() {
+    //    return {userInfo: "hello"};
+    //},
     componentWillMount: function () {
         var ref = new Firebase('https://incandescent-heat-7098.firebaseio.com/users/' + this.props.userId);
-        this.bindAsArray(ref, 'userInfo');
+        this.bindAsObject(ref, "userInfo");
     },
     render: function () {
-        var userName = this.state.userInfo.map(function (info) {
-                console.dir(info['.value']);
-                return info['.key']
-            }
-        )
+        var userName;
+        if (this.state === null) {
+            userName = "placeholder value"
+        } else {
+            userName = this.state.userInfo['name'];
+        }
         return div('.friend-feed', [
                 h1('.content-subhead', [userName + ' recently shared:']),
-                h(UserRecentlySharedVideoList, {videos: this.props.videos}),
+                h(UserRecentlySharedVideoList, {
+                    videos: this.props.videos,
+                }),
             ]
         );
     }
@@ -86,7 +102,9 @@ var VideoWithTitle = React.createClass({
             div('.pure-u-7-24 videoWithTitle',
                 [
                     this.props.title,
-                    h(EmbeddedVideo, {url: "http://img.youtube.com/vi/" + this.props.id + "/0.jpg"})
+                    h(EmbeddedVideo, {
+                        id: this.props.id
+                    })
                 ]
             )
         );
@@ -94,29 +112,16 @@ var VideoWithTitle = React.createClass({
 })
 
 var EmbeddedVideo = React.createClass({
+    handleClick: function () {
+        const videoUrl = "http://www.youtube.com/embed/" + this.props.id + "?autoplay=1"
+        console.log("My iframe: " + document.getElementById('main-video'))
+        document.getElementById('main-video').src = videoUrl
+    },
     render: function () {
         return (
             img(
-                {src: this.props.url, height: '200px'}
+                {src: "http://img.youtube.com/vi/" + this.props.id + "/0.jpg", height: '200px', onClick: this.handleClick}
             )
         );
     }
 })
-
-var Sidebar = React.createClass({
-    render: function () {
-        return (
-            div('.header',
-                [
-                    h1('.brand-title', ['Malk']),
-                    h2('.brand-tagline', ['Subtext']),
-                    nav('.nav', [
-                        ul('.nav-list', [
-                            a('.pure-button', {href: '/'}, 'Login')
-                        ])
-                    ])
-                ]
-            )
-        );
-    }
-});
