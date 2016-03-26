@@ -1,26 +1,38 @@
-var path = require('path');
-var webpack = require('webpack');
+var webpack = require('webpack')
 
 module.exports = {
-  devtool: 'source-map',
-  entry: [
-    'webpack-dev-server/client?http://localhost:3000',
-    'webpack/hot/only-dev-server',
-    './src/index'
-  ],
+
   output: {
-    path: path.join(__dirname, 'dist'),
-    filename: 'bundle.js',
-    publicPath: '/static/'
+    library: 'ReactRouter',
+    libraryTarget: 'umd'
   },
-  plugins: [
-    new webpack.HotModuleReplacementPlugin()
+
+  externals: [
+    {
+      react: {
+        root: 'React',
+        commonjs2: 'react',
+        commonjs: 'react',
+        amd: 'react'
+      }
+    }
   ],
+
   module: {
-    loaders: [{
-      test: /\.js$/,
-      loaders: ['react-hot', 'babel'],
-      include: path.join(__dirname, 'src')
-    }]
-  }
-};
+    loaders: [
+      { test: /\.js$/, exclude: /node_modules/, loader: 'babel' }
+    ]
+  },
+
+  node: {
+    Buffer: false
+  },
+
+  plugins: [
+    new webpack.optimize.OccurenceOrderPlugin(),
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
+    })
+  ]
+
+}
