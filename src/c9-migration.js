@@ -102,9 +102,7 @@ var VideoWithTitle = React.createClass({
             div('.pure-u-7-24 videoWithTitle',
                 [
                     this.props.title,
-                    h(EmbeddedVideo, {
-                        id: this.props.id
-                    })
+                    h(EmbeddedVideo, {id: this.props.id})
                 ]
             )
         );
