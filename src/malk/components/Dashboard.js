@@ -6,7 +6,7 @@ class Dashboard extends React.Component {
     const { courses } = this.props
 
     return (
-      <div>
+            <div className="content pure-u-1 pure-u-md-1-4">
         <h2>Super Scalable Apps</h2>
         <p>
           Open the network tab as you navigate. Notice that only the amount of
