@@ -1,5 +1,6 @@
 import React from 'react'
-import { Navbar, Nav, NavItem, NavDropdown, MenuItem } from 'react-bootstrap';
+import { Button, Navbar, Nav, NavItem, NavDropdown, MenuItem } from 'react-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap'
 import { Link } from 'react-router'
 
 const dark = 'hsl(200, 20%, 20%)'
@@ -39,18 +40,27 @@ class GlobalNav extends React.Component {
   render() {
     const { user } = this.props
 
-    const navbarInstance = (
+    return (
       <Navbar inverse>
         <Navbar.Header>
           <Navbar.Brand>
-            <a href="#">React-Bootstrap</a>
+          <LinkContainer to={{ pathname: '/' }}>
+            <a>MALk</a>
+          </LinkContainer>
           </Navbar.Brand>
           <Navbar.Toggle />
         </Navbar.Header>
         <Navbar.Collapse>
           <Nav>
-            <NavItem eventKey={1} href="#">Link</NavItem>
-            <NavItem eventKey={2} href="#">Link</NavItem>
+            <LinkContainer to={{ pathname: '/calendar' }}>
+              <NavItem eventKey={1}>calendar</NavItem>
+            </LinkContainer>
+            <LinkContainer to={{ pathname: '/grades' }}>
+              <NavItem eventKey={2}>grades</NavItem>
+            </LinkContainer>
+            <LinkContainer to={{ pathname: '/messages' }}>
+              <NavItem eventKey={3}>messages</NavItem>
+            </LinkContainer>
             <NavDropdown eventKey={3} title="Dropdown" id="basic-nav-dropdown">
               <MenuItem eventKey={3.1}>Action</MenuItem>
               <MenuItem eventKey={3.2}>Another action</MenuItem>
@@ -60,25 +70,13 @@ class GlobalNav extends React.Component {
             </NavDropdown>
           </Nav>
           <Nav pullRight>
-            <NavItem eventKey={1} href="#">Link Right</NavItem>
-            <NavItem eventKey={2} href="#">Link Right</NavItem>
+            <LinkContainer to={{ pathname: '/profile' }}>
+              <NavItem eventKey={5}>{user.name}</NavItem>
+            </LinkContainer>
+            <Button onClick={this.logOut}>log out</Button>
           </Nav>
         </Navbar.Collapse>
       </Navbar>
-    );
-
-    return (
-      <div style={styles.wrapper}>
-        <div style={{ float: 'left' }}>
-          <Link to="/" style={styles.link}>Home</Link>{' '}
-          <Link to="/calendar" style={styles.link} activeStyle={styles.activeLink}>Calendar</Link>{' '}
-          <Link to="/grades" style={styles.link} activeStyle={styles.activeLink}>Grades</Link>{' '}
-          <Link to="/messages" style={styles.link} activeStyle={styles.activeLink}>Messages</Link>{' '}
-        </div>
-        <div style={{ float: 'right' }}>
-          <Link style={styles.link} to="/profile">{user.name}</Link> <button onClick={this.logOut}>log out</button>
-        </div>
-      </div>
     )
   }
 }
