@@ -7,10 +7,9 @@ import Sidebar from './Sidebar'
 class App extends React.Component {
   render() {
     return (
-      <div id="layout" class="pure-g">
-        <Sidebar />
+      <div>
         <GlobalNav />
-        <div style={{ padding: 200 }}>
+        <div style={{ padding: 20 }}>
           {this.props.children || <Dashboard courses={COURSES} /> }
         </div>
       </div>
